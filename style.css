@@ -1,0 +1,17 @@
+.display{
+    width: 30%;
+    height: 5rem;
+    font-size: 4rem;
+}
+
+.row-buttons{
+    display: flex;
+}
+
+.button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+    font-size: 2rem;
+}
