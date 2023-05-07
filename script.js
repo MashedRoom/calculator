@@ -7,6 +7,7 @@ const subBtn = document.querySelector(".subtract")
 const opBtn = document.querySelectorAll(".op")
 const equalBtn = document.querySelector(".equal")
 const clearBtn = document.querySelector(".clear")
+const errorDisplay = document.querySelector(".error")
 
 let numbersInput = ""
 let numbers1
@@ -26,21 +27,32 @@ equalBtn.addEventListener("click", calculate)
 clearBtn.addEventListener("click", clearDisplay)
 
 function appendNum(number){
-    numbersInput += number
-    display.innerHTML += number
+    display.innerText += number
+    //numbersInput = display.innerText
 }
 
 function setOperator(oper){
-    numbers1 = numbersInput
+    numbers1 = display.innerText
     operator = oper
-    display.innerHTML += oper
-    numbersInput = ""
+    display.innerText = ""
+    //numbersInput = ""
+    errorDisplay.innerText = ""
 }
 
 function calculate(){
-    numbers2 = numbersInput
-    result = Math.round(operate(numbers1, numbers2, operator) * 100)/100
-    display.innerText = String(result)
+    numbers2 = display.innerText
+    if (numbers1 !== "" && numbers2 !== ""){
+        if (numbers2 === "0" && operator === "/"){
+            errorDisplay.innerText = "You can't divide with 0 fool!"
+            clearDisplay()
+        } else {
+            result = Math.round(operate(numbers1, numbers2, operator) * 100)/100
+            display.innerText = String(result)
+        }
+    } else{
+        errorDisplay.innerText = "You have to input a number!"
+        clearDisplay()
+    }
 }
 
 function operate(num1, num2, operator){
@@ -53,13 +65,13 @@ function operate(num1, num2, operator){
             return subtract(num1, num2)
         case "x" :
             return multiply(num1, num2)
-        case ":":
+        case "/":
             return divide(num1, num2)
     }
 }
 
 function clearDisplay(){
-    numbersInput = ""
+    //numbersInput = ""
     numbers1 = ""
     numbers2 = ""
     display.innerText = ""
